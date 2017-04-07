@@ -14,7 +14,7 @@ if(status != 200){
 	$('#temp').text("Binnen: " + "Error: "+status);
 	$('#outsideTemp').text("Buiten: " + "Error: "+status)
 	$('#alert').fadeIn(1000);
-	$('#alert').text("Kan niet met server verbinden");
+	$('#alert').text("Kan niet met server verbinden.");
 }else{
     $('#alert').hide();
     $('#temp').text("Binnen: " + insideTemp);
