@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Dashboard</title>
-    <link href="favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="favicon.ico" rel="icon" type="image/x-icon"/>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 
-  </head>
-  <body>
+</head>
+<body>
 <div class="alert alert-danger" id="alert" role="alert"></div>
 
-      <div class="page-header">
-        <h3>Dashboard</h3>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="panel panel-default">
+<div class="page-header">
+    <h3>Dashboard</h3>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Temperatuur</h3>
+                <h3 class="panel-title">Temperatuur</h3>
             </div>
             <div class="panel-body">
-              <p id="temp">600</p>
-		<p id="outsideTemp">600</p>
+                <p id="temp">600</p>
+                <p id="outsideTemp">600</p>
             </div>
-          </div>
+        </div>
 
 
-<div class="panel panel-default">
-<div class="panel-heading">
-              <h3 class="panel-title">Lichten</h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Lichten</h3>
             </div>
             <div class="panel-body">
-              <p>Lamp 1</p>
-		<button type="button" id="lamp1off" class="btn btn-lg btn-danger">Uit</button>
-		<button type="button" id="lamp1on" class="btn btn-lg btn-success">Aan</button>
- 		<p>Lamp 2</p>
+                <p>Lamp 1</p>
+                <button type="button" id="lamp1off" class="btn btn-lg btn-danger">Uit</button>
+                <button type="button" id="lamp1on" class="btn btn-lg btn-success">Aan</button>
+                <p>Lamp 2</p>
                 <button type="button" id="lamp2off" class="btn btn-lg btn-danger">Uit</button>
                 <button type="button" id="lamp2on" class="btn btn-lg btn-success">Aan</button>
-             	<p>Lamp 3</p>
+                <p>Lamp 3</p>
                 <button type="button" id="lamp3off" class="btn btn-lg btn-danger">Uit</button>
-                <button type="button" id="lamp3on" class="btn btn-lg btn-success">Aan</butto$
-                        
-</div>
-          </div>
+                <button type="button" id="lamp3on" class="btn btn-lg btn-success">Aan</button>
+
+            </div>
+        </div>
 
 
-	  <div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Temperatuur binnen</h3>
-		</div>
-		<div class="panel-body">
-		<canvas id="myChart"></canvas>
-	</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Temperatuur binnen</h3>
+            </div>
+            <div class="panel-body">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
 
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Temperatuur buiten</h3>
-    </div>
-    <div class="panel-body">
-    <canvas id="myChart2"></canvas>
-  
-  </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Temperatuur buiten</h3>
+            </div>
+            <div class="panel-body">
+                <canvas id="myChart2"></canvas>
+
+            </div>
 
         </div><!-- /.col-sm-4 -->
-      </div>
     </div> <!-- /container -->
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="main.js"></script>
-  </body>
+</div>
+</body>
 </html>
