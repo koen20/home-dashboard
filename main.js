@@ -18,6 +18,7 @@ if(status != 200){
     $('#lamp1').text("Lamp 1");
     $('#lamp2').text("Lamp 2");
     $('#lamp3').text("Lamp 3");
+    $('#status').text("Connecting...");
 }else{
     $('#alert').hide();
     $('#temp').text("Binnen: " + obj['inside-temp']);
@@ -25,6 +26,12 @@ if(status != 200){
     $('#lamp1').text("Lamp 1: " + obj['light-A']);
     $('#lamp2').text("Lamp 2: " + obj['light-B']);
     $('#lamp3').text("Lamp 3: " + obj['light-C']);
+    if(obj['pcOn']){
+        $('#status').text("Computer aan");
+    } else {
+        $('#status').text("Computer uit");
+    }
+
 }
 }
 $(document).ready(main);
@@ -105,6 +112,10 @@ $('#lamp3off').on('click', function() {
 });
 $('#lamp3on').on('click', function() {
   httpPost("https://koenhabets.nl/api/lights?light=Con");
+    update();
+});
+$('#wol').on('click', function() {
+    httpPost("https://koenhabets.nl/api/wol/wake");
     update();
 });
 
