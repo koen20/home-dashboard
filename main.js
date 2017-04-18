@@ -1,19 +1,19 @@
 var status;
 var jsonArray;
 var webSocket;
-var wsUrl = "ws://koenhabets.nl/ws";
+var wsUrl = "wss://koenhabets.nl/ws";
 var server = "https://koenhabets.nl/api";
 //var server = "http://127.0.0.1:9999";
 function main() {
     $('#alert').hide();
-    //update();
+    update();
     updateGraphData();
     updateGraphInside();
     updateGraphOutside();
     startWebSocket();
 }
 function update() {
-    var info = httpGet(server + "/info");
+    parse(httpGet(server + "/info"));
 }
 
 function parse(data) {
@@ -144,7 +144,6 @@ function startWebSocket() {
 
 function onOpen(event) {
     console.log("Web socket connected");
-    $('.sjtek-alert-error').css('display', 'none');
 }
 
 function onClose(event) {
