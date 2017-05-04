@@ -1,19 +1,11 @@
-var status;
 var jsonArray;
 var webSocket;
 var wsUrl = "wss://koenhabets.nl/ws";
 var server = "https://koenhabets.nl/api";
-//var server = "http://127.0.0.1:9999";
 function main() {
     $('#alert').hide();
-    update();
     updateGraphData();
-    updateGraphInside();
-    updateGraphOutside();
     startWebSocket();
-}
-function update() {
-    parse(httpGet(server + "/info"));
 }
 
 function parse(data) {
@@ -32,19 +24,10 @@ function parse(data) {
 }
 
 $(document).ready(main);
-function httpGet(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, false); // false for synchronous request
-    xmlHttp.send(null);
-    status = xmlHttp.status;
-    return xmlHttp.responseText;
-}
+
 function httpPost(theUrl) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("POST", theUrl, false); // false for synchronous request
-    xmlHttp.send(null);
-    status = xmlHttp.status;
-    return xmlHttp.responseText;
+    $.post(theUrl);
+    return "";
 }
 
 function updateGraphInside() {
@@ -78,52 +61,38 @@ function updateGraphOutside() {
 }
 
 function updateGraphData() {
-    var theUrl = server + "/temp?location=graph";
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", theUrl, false); // false for synchronous request
-    xmlHttp.send(null);
-    var timeda = xmlHttp.responseText;
-    jsonArray = JSON.parse(timeda);
+    $.get(server + "/temp?location=graph", function(data, status){
+        jsonArray = JSON.parse(data);
+        updateGraphInside();
+        updateGraphOutside();
+    });
 }
 $('#lamp1off').on('click', function () {
     httpPost(server + "/lights?light=Aoff");
-    //update();
 });
 $('#lamp1on').on('click', function () {
     httpPost(server + "/lights?light=Aon");
-    //update();
 });
 
 $('#lamp2off').on('click', function () {
     httpPost(server + "/lights?light=Boff");
-    //update();
 });
 $('#lamp2on').on('click', function () {
     httpPost(server + "/lights?light=Bon");
-    //update();
 });
 
 $('#lamp3off').on('click', function () {
     httpPost(server + "/lights?light=Coff");
-    //update();
 });
 $('#lamp3on').on('click', function () {
     httpPost(server + "/lights?light=Con");
-    //update();
 });
 $('#wol').on('click', function () {
     httpPost(server + "/wol/wake");
-    //update();
 });
-
-//setInterval(function () {
-    //update();
-//}, 20 * 1000)
 
 setInterval(function () {
     updateGraphData();
-    updateGraphInside();
-    updateGraphOutside();
 }, 120 * 1000)
 
 function startWebSocket() {
@@ -144,6 +113,7 @@ function startWebSocket() {
 
 function onOpen(event) {
     console.log("Web socket connected");
+    webSocket.send("update");
 }
 
 function onClose(event) {
