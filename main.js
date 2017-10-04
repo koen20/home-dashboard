@@ -95,6 +95,10 @@ setInterval(function () {
     updateGraphData();
 }, 120 * 1000)
 
+setInterval(function () {
+    webSocket.send("ping");
+}, 60 * 1000)
+
 function startWebSocket() {
     webSocket = new ReconnectingWebSocket(wsUrl);
     webSocket.onopen = function (evt) {
