@@ -16,15 +16,17 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <style>
         a:hover {
             color: black;
         }
+
         a {
             color: black;
         }
-        .card{
+
+        .card {
             width: 700px;
         }
     </style>
@@ -55,7 +57,10 @@
             <div class="panel-body">
                 <p id="currentEnergyUsage">0</p>
                 <p id="currentEnergyProduction">0</p>
+                <button type="button" id="vorige" class="btn btn-lg btn-success">Vorige</button>
+                <button type="button" id="volgende" class="btn btn-lg btn-success">Volgende</button>
                 <canvas id="powerUsageToday"></canvas>
+                <canvas id="gasUsageToday"></canvas>
             </div>
         </div>
 
@@ -100,36 +105,26 @@
                 </ul>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Temperatuur binnen</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="myChart"></canvas>
-            </div>
+        <div class="card">
+            <iframe src="https://grafana.koenhabets.nl/d-solo/NU9x-nggz/energie?orgId=1&panelId=2" width="450" height="200"
+                    frameborder="0"></iframe>
+            <iframe src="https://grafana.koenhabets.nl/d-solo/U3rwsdRRz/new-dashboard-copy?orgId=1&panelId=4" width="450"
+                    height="200" frameborder="0"></iframe>
         </div>
-
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Temperatuur buiten</h3>
-            </div>
-            <div class="panel-body">
-                <canvas id="myChart2"></canvas>
-
-            </div>
-
-        </div><!-- /.col-sm-4 -->
     </div>
 
-    <script src="reconnecting-websocket.js" type="text/javascript"></script>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="main.js"></script>
-    <script src="https://static.sekandocdn.net/static/feednami/feednami-client-v1.1.js"></script>
-    <script src="news.js"></script>
+
+</div><!-- /.col-sm-4 -->
+</div>
+
+<script src="reconnecting-websocket.js" type="text/javascript"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="main.js"></script>
+<script src="https://static.sekandocdn.net/static/feednami/feednami-client-v1.1.js"></script>
+<script src="news.js"></script>
 
 </div>
 </body>

@@ -2,13 +2,11 @@ var jsonArray;
 var webSocket;
 var wsUrl = "wss://koenhabets.nl/ws";
 var server = "https://koenhabets.nl/api";
-var jsonArrayPowerData = JSON.parse("[]");
-var jsonArrayPowerTime = JSON.parse("[]");
+var miliadd = 0;
 
 function main() {
     $('#alert').hide();
     getPowerData();
-    updateGraphData();
     startWebSocket();
 }
 
@@ -37,75 +35,43 @@ function httpPost(theUrl) {
     return "";
 }
 
-function updateGraphInside() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: jsonArray[0],
-            datasets: [{
-                label: 'Temperatuur binnen',
-                data: jsonArray[1],
-                backgroundColor: "rgba(153,255,51,0.4)"
-            }]
-        }
-    });
-}
-
-function updateGraphOutside() {
-    var ctx = document.getElementById('myChart2').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: jsonArray[0],
-            datasets: [{
-                label: 'Temperatuur buiten',
-                data: jsonArray[2],
-                backgroundColor: "rgba(255,153,0,0.4)"
-            }]
-        }
-    });
-}
-
-function updateGraphData() {
-    $.get(server + "/temp?location=graph", function (data, status) {
-        jsonArray = JSON.parse(data);
-        updateGraphInside();
-        updateGraphOutside();
-    });
-}
-
 function getPowerData() {
-    jsonArrayPowerData = JSON.parse("[]");
-    jsonArrayPowerTime = JSON.parse("[]");
+    var jsonArrayGasData = [];
+    var jsonArrayPowerData = [];
+    var jsonArrayPowerTime = [];
     var time = new Date();
     time.setHours(0);
     time.setMinutes(0);
-    var millisecondsStart = Math.round(time.getTime() / 1000);
-    var millisecondsEnd = Math.round(time.getTime() / 1000 + 86520000);
-    $.get(server + "/energy?startTime=" + millisecondsStart + "&endTime=" + millisecondsEnd, function (data, status) {
+    var millisecondsStart = Math.round(time.getTime() / 1000) + miliadd;
+    var millisecondsEnd = Math.round(time.getTime() / 1000 + 86520000) + miliadd;
+    $.get(server + "/energy?interval=hourly&startTime=" + millisecondsStart + "&endTime=" + millisecondsEnd, function (data, status) {
         var jsonArrayPower = JSON.parse(data);
         var i;
         var total;
+        var gasTotal;
         for (i = 0; i < jsonArrayPower.length; i++) {
             if (i != 0) {
                 var item = jsonArrayPower[i];
                 var usage1 = item.energyUsage1 + item.energyUsage2;
                 var production1 = item.energyProduction1 + item.energyProduction2;
                 var total1 = usage1 - production1;
+                var gasUsage1 = item.gasUsage;
 
                 var item2 = jsonArrayPower[i - 1];
                 var usage2 = item2.energyUsage1 + item2.energyUsage2;
                 var production2 = item2.energyProduction1 + item2.energyProduction2;
                 var total2 = usage2 - production2;
+                var gasUsage2 = item2.gasUsage;
 
                 total = total1 - total2;
+                gasTotal = gasUsage1 - gasUsage2;
                 jsonArrayPowerData.push(total);
+                jsonArrayGasData.push(gasTotal);
                 jsonArrayPowerTime.push(i);
             }
         }
         var ctx = document.getElementById('powerUsageToday').getContext('2d');
-        var myChart = new Chart(ctx, {
+        var myChartEnergy = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: jsonArrayPowerTime,
@@ -116,8 +82,29 @@ function getPowerData() {
                 }]
             }
         });
+        var ctx2 = document.getElementById('gasUsageToday').getContext('2d');
+        var myChartGas = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: jsonArrayPowerTime,
+                datasets: [{
+                    label: 'Gas gebruik vandaag',
+                    data: jsonArrayGasData,
+                    backgroundColor: "rgb(6,122,56)"
+                }]
+            }
+        });
     });
 }
+
+$('#vorige').on('click', function () {
+    miliadd = miliadd - 86400000 / 1000;
+    getPowerData();
+});
+$('#volgende').on('click', function () {
+    miliadd = miliadd + 86400000 / 1000;
+    getPowerData();
+});
 
 $('#lamp1off').on('click', function () {
     httpPost(server + "/lights?light=Aoff");
@@ -145,12 +132,11 @@ $('#wol').on('click', function () {
 
 setInterval(function () {
     getPowerData();
-    updateGraphData();
-}, 120 * 1000)
+}, 120 * 1000);
 
 setInterval(function () {
     webSocket.send("ping");
-}, 60 * 1000)
+}, 60 * 1000);
 
 function startWebSocket() {
     webSocket = new ReconnectingWebSocket(wsUrl);
