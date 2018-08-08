@@ -1,4 +1,3 @@
-var jsonArray;
 var webSocket;
 var wsUrl = "wss://koenhabets.nl/ws";
 var server = "https://koenhabets.nl/api";

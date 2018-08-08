@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="black" />
+
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Dashboard</title>
     <link href="favicon.ico" rel="icon" type="image/x-icon"/>
@@ -26,9 +28,10 @@
             color: black;
         }
 
-        .card {
-            width: 700px;
+        .list-group-item a{
+            color: white;
         }
+
     </style>
 
 </head>
@@ -36,25 +39,25 @@
 <div class="alert alert-danger" id="alert" role="alert"></div>
 
 <div class="page-header">
-    <h3>Dashboard</h3>
+    <h2>Dashboard</h2>
 </div>
-<div class="row">
+<div class="row" id="tada">
     <div class="col-sm-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Temperatuur</h3>
+        <div class="card">
+            <div class="card-header">
+                <p class="card-title">Temperatuur</p>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <p id="temp">600</p>
                 <p id="outsideTemp">600</p>
             </div>
         </div>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Energie</h3>
+        <div class="card">
+            <div class="card-header">
+                <p class="card-title">Energie</p>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <p id="currentEnergyUsage">0</p>
                 <p id="currentEnergyProduction">0</p>
                 <button type="button" id="vorige" class="btn btn-lg btn-success">Vorige</button>
@@ -65,11 +68,11 @@
         </div>
 
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Lichten</h3>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Lichten</h5>
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <p id="lamp1">Lamp 1</p>
                 <button type="button" id="lamp1off" class="btn btn-lg btn-danger">Uit</button>
                 <button type="button" id="lamp1on" class="btn btn-lg btn-success">Aan</button>
@@ -80,16 +83,6 @@
                 <button type="button" id="lamp3off" class="btn btn-lg btn-danger">Uit</button>
                 <button type="button" id="lamp3on" class="btn btn-lg btn-success">Aan</button>
 
-            </div>
-        </div>
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Wake On Lan</h3>
-            </div>
-            <div class="panel-body">
-                <p id="status">Computer aan: </p>
-                <button type="button" id="wol" class="btn btn-lg btn-success">Wol</button>
             </div>
         </div>
     </div> <!-- /container -->
@@ -106,15 +99,23 @@
             </div>
         </div>
         <div class="card">
-            <iframe src="https://grafana.koenhabets.nl/d-solo/NU9x-nggz/energie?orgId=1&panelId=2" width="450" height="200"
+            <iframe src="https://grafana.koenhabets.nl/d-solo/NU9x-nggz/energie?orgId=1&panelId=2" width="450"
+                    height="200"
                     frameborder="0"></iframe>
-            <iframe src="https://grafana.koenhabets.nl/d-solo/U3rwsdRRz/new-dashboard-copy?orgId=1&panelId=4" width="450"
+            <iframe src="https://grafana.koenhabets.nl/d-solo/U3rwsdRRz/new-dashboard-copy?orgId=1&panelId=4"
+                    width="450"
                     height="200" frameborder="0"></iframe>
         </div>
-    </div>
-
-
-</div><!-- /.col-sm-4 -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Wake On Lan</h5>
+            </div>
+            <div class="card-body">
+                <p id="status">Computer aan: </p>
+                <button type="button" id="wol" class="btn btn-lg btn-success">Wol</button>
+            </div>
+        </div>
+    </div><!-- /.col-sm-4 -->
 </div>
 
 <script src="reconnecting-websocket.js" type="text/javascript"></script>
