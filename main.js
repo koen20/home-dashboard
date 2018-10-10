@@ -1,3 +1,4 @@
+var jsonArray;
 var webSocket;
 var wsUrl = "wss://koenhabets.nl/ws";
 var server = "https://koenhabets.nl/api";
@@ -7,6 +8,7 @@ function main() {
     $('#alert').hide();
     getPowerData();
     startWebSocket();
+    updateRecentPower();
 }
 
 function parse(data) {
@@ -96,6 +98,31 @@ function getPowerData() {
     });
 }
 
+function updateRecentPower(){
+    $.get(server + "/energy?interval=recent", function (data, status) {
+        var jsonArrayPower = JSON.parse(data);
+        var jsonArrayRecent = [];
+        var jsonArrayRecentTime = [];
+        for (i = 0; i < jsonArrayPower.length; i++) {
+            var item = jsonArrayPower[i];
+            jsonArrayRecent.push(item.energyUsage - item.energyProduction);
+            jsonArrayRecentTime.push(i * 5);
+        }
+        var chartRecent = document.getElementById('powerUsageRecent').getContext('2d');
+        var myChartRecent = new Chart(chartRecent, {
+            type: 'line',
+            data: {
+                labels: jsonArrayRecentTime,
+                datasets: [{
+                    label: 'Recent power usage',
+                    data: jsonArrayRecent,
+                    backgroundColor: "rgb(6,122,56)"
+                }]
+            }
+        });
+    });
+}
+
 $('#vorige').on('click', function () {
     miliadd = miliadd - 86400000 / 1000;
     getPowerData();
@@ -132,6 +159,10 @@ $('#wol').on('click', function () {
 setInterval(function () {
     getPowerData();
 }, 120 * 1000);
+
+setInterval(function () {
+    updateRecentPower();
+}, 5 * 1000);
 
 setInterval(function () {
     webSocket.send("ping");
